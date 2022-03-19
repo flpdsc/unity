@@ -1,0 +1,15 @@
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day03\bin\Debug\net6.0\day03.exe
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day03\bin\Debug\net6.0\day03.deps.json
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day03\bin\Debug\net6.0\day03.runtimeconfig.json
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day03\bin\Debug\net6.0\day03.dll
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day03\bin\Debug\net6.0\day03.pdb
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day03\obj\Debug\net6.0\day03.csproj.AssemblyReference.cache
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day03\obj\Debug\net6.0\day03.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day03\obj\Debug\net6.0\day03.AssemblyInfoInputs.cache
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day03\obj\Debug\net6.0\day03.AssemblyInfo.cs
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day03\obj\Debug\net6.0\day03.csproj.CoreCompileInputs.cache
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day03\obj\Debug\net6.0\day03.dll
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day03\obj\Debug\net6.0\refint\day03.dll
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day03\obj\Debug\net6.0\day03.pdb
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day03\obj\Debug\net6.0\day03.genruntimeconfig.cache
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day03\obj\Debug\net6.0\ref\day03.dll
