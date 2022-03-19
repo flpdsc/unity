@@ -52,7 +52,8 @@ namespace cs03
             {
                 string id = string.Empty;
                 string pw, pwc;
-
+                char masking = '*'; //caching
+                
                 while (true)
                 {
                     Console.Clear();
@@ -70,7 +71,7 @@ namespace cs03
                     }
 
                     Console.Write("PW : ");
-                    pw = InputPW();
+                    pw = InputPW(masking);
 
                     if (!IsRange(pw, 4, 20))
                     {
@@ -80,7 +81,7 @@ namespace cs03
                     }
 
                     Console.Write("PW Confirm : ");
-                    pwc = InputPW();
+                    pwc = InputPW(masking);
 
                     if (pw == pwc)
                     {
@@ -101,7 +102,7 @@ namespace cs03
             return str.Length >= min && str.Length <= max;
         }
 
-        static string InputPW()
+        static string InputPW(char masking)
         {
             string inp = string.Empty;
             while (true)
@@ -112,7 +113,7 @@ namespace cs03
                     Console.WriteLine();
                     break;
                 }
-                Console.Write("*");
+                Console.Write(masking);
                 inp += info.KeyChar;
             }
             return inp;
