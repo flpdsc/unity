@@ -162,7 +162,7 @@ namespace day05
                 Vector2 vec2 = new Vector2(-1, 2);
                 Console.WriteLine("vec3:{0} + vec2:{1} = {2}", vec3, vec2, vec3+vec2);
             }
-            if(true)
+            if(false)
             {
                 Vector2 position1 = new Vector2(0, 0);
                 VECTOR dir = VECTOR.Up;
@@ -189,8 +189,24 @@ namespace day05
                 Console.WriteLine("파싱 성공 여부 : {0}", isSuccess);
                 Console.WriteLine("direction의 값 : {0}({1}), 타입 : {2}", direction, (int)direction, direction.GetType());
             }
-        }
+            if(true)
+            {
+                //숫자 -> 문자형
+                int age = 100;
+                string text = age.ToString();
 
+                //문자형 -> 숫자형(정수)
+                Console.Write("숫자를 입력하세요 : ");
+                string input = Console.ReadLine();
+                //age = int.Parse(input); //349.3sjkd 에러
+                bool isParse = int.TryParse(input, out age);
+                Console.WriteLine("성공여부 : {0}", isParse);
+                Console.WriteLine("age의 값은 : {0:#,##0}, 타입은 : {1}", age, age.GetType());
+            }
+        }
+        //out 키워드
+        //1. 함수가 종료된 후 out 키워드가 붙은 변수에 어떠한 값이든 넣어주겠음을 보장
+        //2. 외부에 여러가지 값을 전달하고 싶을 때 사용
         static bool Squt(out int number)
         {
             number = 10;
