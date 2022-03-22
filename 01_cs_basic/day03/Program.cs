@@ -53,7 +53,7 @@ namespace cs03
                 string id = string.Empty;
                 string pw, pwc;
                 char masking = '*'; //caching
-                
+
                 while (true)
                 {
                     Console.Clear();
