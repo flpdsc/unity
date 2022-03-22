@@ -1,0 +1,15 @@
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day05\obj\Debug\net6.0\day05.csproj.AssemblyReference.cache
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day05\obj\Debug\net6.0\day05.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day05\obj\Debug\net6.0\day05.AssemblyInfoInputs.cache
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day05\obj\Debug\net6.0\day05.AssemblyInfo.cs
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day05\obj\Debug\net6.0\day05.csproj.CoreCompileInputs.cache
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day05\bin\Debug\net6.0\day05.exe
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day05\bin\Debug\net6.0\day05.deps.json
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day05\bin\Debug\net6.0\day05.runtimeconfig.json
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day05\bin\Debug\net6.0\day05.dll
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day05\bin\Debug\net6.0\day05.pdb
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day05\obj\Debug\net6.0\day05.dll
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day05\obj\Debug\net6.0\refint\day05.dll
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day05\obj\Debug\net6.0\day05.pdb
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day05\obj\Debug\net6.0\day05.genruntimeconfig.cache
+C:\Users\JAE\Documents\src\unity\01_cs_basic\day05\obj\Debug\net6.0\ref\day05.dll

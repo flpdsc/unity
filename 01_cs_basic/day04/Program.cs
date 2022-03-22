@@ -8,7 +8,7 @@ namespace day04
     {
         public readonly int MAX_COUNT; // 상수 : 생성자에 한 번 값 대입 가능
 
-        string[] items; //실제 아이템 베열
+        string[] items; //실제 아이템 배열
         int count; //아이템 갯수
 
         #region 프로퍼티(속성) getter, setter
