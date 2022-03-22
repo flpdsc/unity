@@ -6,6 +6,12 @@ namespace day05
     {
         public int x;
         public int y;
+
+        public static Vector2 Up = new Vector2(0, 1);
+        public static Vector2 Down = new Vector2(0, -1);
+        public static Vector2 Left = new Vector2(-1, 0);
+        public static Vector2 Right = new Vector2(1, 0);
+
         public Vector2(int x, int y)
         {
             this.x = x;
@@ -23,6 +29,24 @@ namespace day05
         {
             return new Vector2(p1.x+p2.x, p1.y+p2.y);
         }
+
+        public static Vector2 operator+(Vector2 p1, VECTOR dir)
+        {
+            switch(dir)
+            {
+                case VECTOR.Up:
+                    return p1+Vector2.Up;
+                case VECTOR.Down:
+                    return p1+Vector2.Down;
+                case VECTOR.Left:
+                    return p1+Vector2.Left;
+                case VECTOR.Right:
+                    return p1+Vector2.Right;
+                default:
+                    return p1;    
+            }
+        }
+
         public static Vector2 operator-(Vector2 p1, Vector2 p2)
         {
             return new Vector2(p1.x-p2.x, p1.y-p2.y);
@@ -94,40 +118,83 @@ namespace day05
 
     }
 
+    enum VECTOR
+    {
+        Up,
+        Down,
+        Left,
+        Right,
+    }
+
     class Program
     {
         static void Main(string[] args)
         {
-            Vector2 position = new Vector2(0, 0);
-            Console.WriteLine("x: {0}, y: {1}", position.x, position.y);
-            Console.WriteLine(position); //ToString 함수 오버라이딩
+            if(false)
+            {
+                Vector2 position = new Vector2(0, 0);
+                Console.WriteLine("x: {0}, y: {1}", position.x, position.y);
+                Console.WriteLine(position); //ToString 함수 오버라이딩
 
-            //연산자 오버로딩
-            Vector2 pos1 = new Vector2(1, 3);
-            Vector2 pos2 = new Vector2(4, 2);
-            Vector2 sum = pos1+pos2;
-            Console.WriteLine("pos1 + pos2 = {0}", sum);
+                //연산자 오버로딩
+                Vector2 pos1 = new Vector2(1, 3);
+                Vector2 pos2 = new Vector2(4, 2);
+                Vector2 sum = pos1+pos2;
+                Console.WriteLine("pos1 + pos2 = {0}", sum);
 
-            pos1 = new Vector2(1, 1);
-            pos2 = new Vector2(1, 1);
-            Console.WriteLine("pos1에서 pos2 방향은? {0}", pos2-pos1);
-            pos1 += pos2;
-            Console.WriteLine(pos1);
+                pos1 = new Vector2(1, 1);
+                pos2 = new Vector2(1, 1);
+                Console.WriteLine("pos1에서 pos2 방향은? {0}", pos2-pos1);
+                pos1 += pos2;
+                Console.WriteLine(pos1);
 
-            Console.WriteLine("pos1과 pos2는 같은 값인가? {0}", pos1==pos2);
-            //클래스 일 경우 False(참조형식), 구조체일 경우 True(값형식)
-            Console.WriteLine("pos1과 pos2는 같은 주소값인가? {0}", pos1.Equals(pos2));
+                Console.WriteLine("pos1과 pos2는 같은 값인가? {0}", pos1==pos2);
+                //클래스 일 경우 False(참조형식), 구조체일 경우 True(값형식)
+                Console.WriteLine("pos1과 pos2는 같은 주소값인가? {0}", pos1.Equals(pos2));
 
-            Vector3 vec3 = new Vector3(1);
-            Console.WriteLine(vec3);
-            vec3 = new Vector3(1, 2);
-            Console.WriteLine(vec3);
-            vec3 = new Vector3(1, 2, 3);
-            Console.WriteLine(vec3);
+                Vector3 vec3 = new Vector3(1);
+                Console.WriteLine(vec3);
+                vec3 = new Vector3(1, 2);
+                Console.WriteLine(vec3);
+                vec3 = new Vector3(1, 2, 3);
+                Console.WriteLine(vec3);
 
-            Vector2 vec2 = new Vector2(-1, 2);
-            Console.WriteLine("vec3:{0} + vec2:{1} = {2}", vec3, vec2, vec3+vec2);
+                Vector2 vec2 = new Vector2(-1, 2);
+                Console.WriteLine("vec3:{0} + vec2:{1} = {2}", vec3, vec2, vec3+vec2);
+            }
+            if(true)
+            {
+                Vector2 position1 = new Vector2(0, 0);
+                VECTOR dir = VECTOR.Up;
 
+                position1 += dir;
+                Console.WriteLine($"UP : {position1}");
+
+                //열거형 출력
+                Console.WriteLine(VECTOR.Up.ToString());
+                VECTOR direction = VECTOR.Down;
+                Console.WriteLine("direction의 값 : {0}, 타입 : {1}", direction, direction.GetType());
+
+                //형변환(열거형->문자형)
+                string str = direction.ToString();
+                Console.WriteLine("str 값 : {0}, 타입 : {1}", str, str.GetType());
+
+                //형변환(문자형->열거형)
+                str = "Left";
+                //str = "LEFT";
+                //direction = (VECTOR)Enum.Parse(typeof(VECTOR), str); // "UP" 파싱 안되고 에러. 대소문자 구분
+                bool isSuccess = Enum.TryParse(str, out direction); //틀리면 초기값으로 바꿈
+
+                //파싱한 값 출력
+                Console.WriteLine("파싱 성공 여부 : {0}", isSuccess);
+                Console.WriteLine("direction의 값 : {0}({1}), 타입 : {2}", direction, (int)direction, direction.GetType());
+            }
+        }
+
+        static bool Squt(out int number)
+        {
+            number = 10;
+            return true;
         }        
     }
 }
