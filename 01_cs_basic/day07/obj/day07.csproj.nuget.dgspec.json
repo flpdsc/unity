@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/macj/src/unity/01_cs_basic/day07/day07.csproj": {}
+    "C:\\Users\\JAE\\Documents\\src\\unity\\01_cs_basic\\day07\\day07.csproj": {}
   },
   "projects": {
-    "/Users/macj/src/unity/01_cs_basic/day07/day07.csproj": {
+    "C:\\Users\\JAE\\Documents\\src\\unity\\01_cs_basic\\day07\\day07.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/macj/src/unity/01_cs_basic/day07/day07.csproj",
+        "projectUniqueName": "C:\\Users\\JAE\\Documents\\src\\unity\\01_cs_basic\\day07\\day07.csproj",
         "projectName": "day07",
-        "projectPath": "/Users/macj/src/unity/01_cs_basic/day07/day07.csproj",
-        "packagesPath": "/Users/macj/.nuget/packages/",
-        "outputPath": "/Users/macj/src/unity/01_cs_basic/day07/obj/",
+        "projectPath": "C:\\Users\\JAE\\Documents\\src\\unity\\01_cs_basic\\day07\\day07.csproj",
+        "packagesPath": "C:\\Users\\JAE\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\JAE\\Documents\\src\\unity\\01_cs_basic\\day07\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/macj/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\JAE\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -52,7 +52,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.201/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

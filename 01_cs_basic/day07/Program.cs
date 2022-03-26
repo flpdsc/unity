@@ -38,6 +38,7 @@ namespace day07
     {
         public readonly string name;
         private Item[] equips;
+        private Inventory inven;
 
         private static readonly string EMPTY = "비어있음";
 
@@ -50,6 +51,7 @@ namespace day07
         {
             this.name = name;
             equips = new Item[(int)TYPE.Count];
+            inven = new Inventory();
         }
         
         public void PrintInfo()
@@ -85,11 +87,20 @@ namespace day07
             equips[(int)type] = null;
             return take;
         }
+
+        public void OpenInventory()
+        {
+            PrintInfo();
+            inven.Open();
+            inven.Print();
+        }
     }
     
     class Inventory
     {
         List<Item> list;
+        int selected = -1;
+
         public Inventory()
         {
             list = new List<Item>();
@@ -107,15 +118,44 @@ namespace day07
             return popItem;
         }
 
+        public void Open()
+        {
+            selected = 1;
+        }
+
+        public void Close()
+        {
+            selected = -1;
+        }
+
         public void Print()
         {
+            (int beforeLeft, int beforeTop) = Console.GetCursorPosition();
+
+            int top = 0;
+            Console.SetCursorPosition(30, top++);
             Console.WriteLine("----[인벤토리]----");
-            for(int i=0; i<list.Count; ++i)
+            for(int i=1; i<=6; ++i)
             {
-                Item item = list[i];
-                Console.WriteLine("{0}. {1}", i, item.name);
+                Console.SetCursorPosition(30, top++);
+                if(selected == i)
+                {
+                    Console.Write(">>");
+                }
+                if(list.Count<=i)
+                {
+                    Console.WriteLine($"{i}. 비어있음");
+                }
+                else
+                {
+                    // i번째 아이템 접근
+                    Item item = list[i];
+                    Console.WriteLine("{0}. {1}", i, item.name);
+                }
             }
+            Console.SetCursorPosition(30, top++);
             Console.WriteLine("------------------");
+            Console.SetCursorPosition(beforeLeft, beforeTop);
         }
     }
     class Program
@@ -124,34 +164,10 @@ namespace day07
         {
             //객체 선언
             Player player = new Player("테스터");
-            Inventory inventory = new Inventory();
             
             player.EquipItem(new Item("개 쩌는 하의", JOB.Archor, TYPE.Pants));
-
-            //인벤토리 내부 아이템 추가
-            inventory.Push(new Item("허름한 도끼", JOB.Warrior, TYPE.Weapon));
-            inventory.Push(new Item("빛나는 상의", JOB.Archor, TYPE.Armor));
-            inventory.Push(new Item("가죽 하의", JOB.Wizard, TYPE.Pants));
-            inventory.Push(new Item("귀여운 모자", JOB.Wizard, TYPE.Hat));
             
-            //유저 입력
-            player.PrintInfo();
-            inventory.Print();
-
-            Console.Write("장비할 아이템 번호 : ");
-            int select = -1;
-            int.TryParse(Console.ReadLine(), out select);
-
-            Item item = inventory.Pop(select);
-            Item equippedItem = player.EquipItem(item);
-            if(equippedItem!=null)
-            {
-                inventory.Push(equippedItem);
-            }
-            player.EquipItem(item);
-
-            player.PrintInfo();
-            inventory.Print();
+            player.OpenInventory();
         }
     }
 }
