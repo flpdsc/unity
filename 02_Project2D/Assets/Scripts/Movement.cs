@@ -12,11 +12,23 @@ public class Movement : MonoBehaviour
     [SerializeField] float speed = 5f;
     [SerializeField] float jumpPower = 5f;
 
-    bool isGrounded;
+    bool isGrounded
+    {
+        get
+        {
+            return anim.GetBool("isGrounded");
+        }
+        set
+        {
+            anim.SetBool("isGrounded", value);
+        }
+    }
+
     bool isJumping;
 
     private void Start()
     {
+
     }
 
     private void Update()
@@ -24,6 +36,7 @@ public class Movement : MonoBehaviour
         CheckGround();
         Move();
         Jump();
+        anim.SetFloat("VelocityY", rigid.velocity.y);
     }
 
     void CheckGround()
