@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    [SerializeField] Player player;
     [SerializeField] Animator anim;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Rigidbody2D rigid;
@@ -34,7 +35,7 @@ public class Movement : MonoBehaviour
     {
         CheckGround();
 
-        if (!isLockControl)
+        if (!player.isDead && !isLockControl)
         {
             Move();
             Jump();
