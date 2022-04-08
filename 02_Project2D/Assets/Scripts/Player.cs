@@ -12,11 +12,14 @@ public class Player : MonoBehaviour
     //따라서 초기화 시점에 미리 검색하고 이후에는 변수를 사용함
     SpriteRenderer spriteRenderer;
     bool isGodMode;
-
+    bool isFallDown;
     int hp;
     int coin;
-    //프로퍼티 : isDead는 참조만 가능하며, 리턴값은 아래 조건 연산자의 결과값
-    public bool isDead => hp <= 0;
+
+    //프로퍼티
+    public bool isDead => hp <= 0 || isFallDown; //isDead는 참조만 가능하며 리턴값은 조건 연산자의 결과값
+    public int Hp => hp;    //Hp를 참조하면 hp값을 리턴
+    public int Coin => coin; //Coin을 참조하면 coin값을 리턴
 
     private void Start()
     {
@@ -39,10 +42,14 @@ public class Player : MonoBehaviour
 
     }
 
+    public void OnFallDown()
+    {
+        isFallDown = true;
+    }
+
     public void OnContactCoin(Coin target)
     {
         coin += 1;
-        Debug.Log($"Coin : {coin}");
     }
 
     private void OnHit()
