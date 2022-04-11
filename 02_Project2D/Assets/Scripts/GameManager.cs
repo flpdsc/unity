@@ -6,12 +6,15 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] Player player;
     [SerializeField] GameObject gameOverPanel;
+    [SerializeField] GameObject pausePanel;
+    //[SerializeField] SceneMover sceneMover;
 
     bool isGameOver = false;
 
     private void Start()
     {
         gameOverPanel.SetActive(false);
+        pausePanel.SetActive(false);
     }
 
     private void Update()
@@ -20,6 +23,28 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(GameOver());
         }
+
+        //게임오버 상태가 아니고 ESC키를 눌렀을 때 + 화면 전환 중이 아닐 때 
+        if(!isGameOver)
+        {
+            if(Input.GetKeyDown(KeyCode.Escape) && !SceneMover.isFading)
+            {
+                pausePanel.SetActive(true);
+                Time.timeScale = 0f;
+            }
+        }
+    }
+
+    public void OnReleasePause()
+    {
+        pausePanel.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    public void OnExitGameScene()
+    {
+        Time.timeScale = 1f;
+        //UnityEngine.SceneManagement.SceneManager.LoadScene("Title");
     }
 
     private IEnumerator GameOver()
