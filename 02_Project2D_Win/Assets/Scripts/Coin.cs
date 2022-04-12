@@ -22,7 +22,7 @@ public class Coin : MonoBehaviour
             player.OnContactCoin(this); //플레이어에게 알려주기
             collider2D.enabled = false; //충돌체 끄기
             anim.SetTrigger("onEat");   //onEat트리거 누르기
-
+            AudioManager.Instance.PlaySE("eat");
         }
     }
 

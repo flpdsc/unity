@@ -95,6 +95,7 @@ public class Movement : MonoBehaviour
             //=>ForceMode2D.Force : ¹Î´Ù
             //=>ForceMode2D.Impulse : Æø¹ßÀûÀÎ ÈûÀ» °¡ÇÔ
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            AudioManager.Instance.PlaySE("jump");
             isJumping = true;
         }
     }
