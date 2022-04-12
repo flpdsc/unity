@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     {
         gameOverPanel.SetActive(false);
         pausePanel.SetActive(false);
+        StartCoroutine(GameStart());
     }
 
     private void Update()
@@ -45,6 +46,12 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         //UnityEngine.SceneManagement.SceneManager.LoadScene("Title");
+    }
+
+    private IEnumerator GameStart()
+    {
+        yield return new WaitForSeconds(1f);
+        AudioManager.Instance.PlayBGM(); //싱글톤을 이용해 AudioManager 객체에 접근
     }
 
     private IEnumerator GameOver()

@@ -88,6 +88,7 @@ public class Movement : MonoBehaviour
             //ForceMode2D.Force : 민다
             //ForceMode2D.Impulse : 폭발적인 힘 가함
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            AudioManager.Instance.PlaySE("jump");
             isJumping = true;
         }
     }

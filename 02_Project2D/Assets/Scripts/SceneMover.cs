@@ -30,20 +30,6 @@ public class SceneMover : MonoBehaviour
         StartCoroutine(FadeOut(sceneName));
     }
 
-    /*
-    [ContextMenu("FadeOut")] public void OnFaceOut()
-    {
-        if (isFading) return;   
-        StartCoroutine(FadeOut()); //FadeOut 코루틴 실행
-    }
-
-    [ContextMenu("FadeIn")] public void OnFaceIn()
-    {
-        if (isFading) return;
-        StartCoroutine(FadeIn()); //FadeIn 코루틴 실행
-    }
-    */
-
     IEnumerator FadeOut(string sceneName)
     {
         isFading = true;
@@ -90,7 +76,7 @@ public class SceneMover : MonoBehaviour
         }
         while (time > 0f);
 
-        blindImage.enabled = false; //blindImage 활성화 
+        blindImage.enabled = false; //blindImage 활성화 
         isFading = false;
     }
 
