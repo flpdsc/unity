@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     {
         gameOverPanel.SetActive(false);
         pausePanel.SetActive(false);
+        StartCoroutine(GameStart());
     }
 
     private void Update()
@@ -31,6 +32,12 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0f; //월드 전체 시간 배율 x0배로 설정
             }
         }
+
+        //테스트
+        if (Input.GetKeyDown(KeyCode.Q))
+            AudioManager.Instance.PlaySE("jump");
+        if (Input.GetKeyDown(KeyCode.W))
+            AudioManager.Instance.PlaySE("light");
     }
 
     public void OnReleasePause()
@@ -45,6 +52,12 @@ public class GameManager : MonoBehaviour
         //UnityEngine.SceneManagement.SceneManager.LoadScene("Title");
     }
 
+    private IEnumerator GameStart()
+    {
+        yield return new WaitForSeconds(1f);
+        AudioManager.Instance.PlayBGM(); //싱글톤을 이용해 AudioManager 객체에 접근
+    }
+
     private IEnumerator GameOver()
     {
         isGameOver = true;
@@ -54,6 +67,8 @@ public class GameManager : MonoBehaviour
         //GameObject.SetActive(bool) : void
         //게임 오브젝트 자체를 활성/비활성화 함
         gameOverPanel.SetActive(true);
+
+        AudioManager.Instance.StopBGM();
 
         yield return new WaitForSeconds(4.0f);
 
