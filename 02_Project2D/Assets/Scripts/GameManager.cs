@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
         gameOverPanel.SetActive(false);
         pausePanel.SetActive(false);
         StartCoroutine(GameStart());
+
     }
 
     private void Update()
