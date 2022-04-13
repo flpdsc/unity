@@ -9,12 +9,7 @@ public class AudioEffect : MonoBehaviour
     //델리게이트 : 함수를 가지는 변수
     //접근제한자 delegate 반환형 델리게이트명(매개변수)
     public delegate void ReturnPoolEvent(AudioEffect se);
-    ReturnPoolEvent onReturn;
-
-    public void Setup(ReturnPoolEvent onReturn)
-    {
-        this.onReturn = onReturn;
-    }
+    public event ReturnPoolEvent onReturn;
 
     public void PlaySE(AudioClip clip)
     {

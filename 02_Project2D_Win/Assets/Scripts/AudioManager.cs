@@ -38,7 +38,7 @@ public class AudioManager : MonoBehaviour
     {
         AudioEffect newPool = Instantiate(sePrefab); //sePrefab복제
         newPool.transform.SetParent(storageParent); //복제품의 부모를 storageParent로 설정
-        newPool.Setup(ReturnPool); //Setup을 통해 이벤트 등록
+        newPool.onReturn += ReturnPool; //event형 Delegate 사용
         storage.Push(newPool); //storage에 추가
     }
 
