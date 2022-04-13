@@ -2,21 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : ObjectPool<AudioManager, AudioEffect>
 {
-    //Singleton
-    static AudioManager instance;
-    public static AudioManager Instance => instance;
 
-    [SerializeField] AudioEffect sePrefab;
     [SerializeField] AudioClip[] effects;
 
     AudioSource audioSource;
-
-    private void Awake()
-    {
-        instance = this;
-    }
 
     private void Start()
     {
@@ -40,8 +31,8 @@ public class AudioManager : MonoBehaviour
             if(effects[i].name == name)
             {
                 AudioClip clip = effects[i];
-                AudioEffect effect = Instantiate(sePrefab);
-                effect.PlaySE(clip);
+                AudioEffect effect = GetPool(); //효과음 오브젝트 꺼내기
+                effect.PlaySE(clip); //clip 전달, 재생
                 break;
             }
         }

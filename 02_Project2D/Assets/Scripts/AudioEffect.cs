@@ -2,22 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioEffect : MonoBehaviour
+public class AudioEffect : MonoBehaviour, IObjectPool<AudioEffect>
 {
     [SerializeField] AudioSource source;
+
+    //델리게이트
+    public delegate void ReturnPoolEvent(AudioEffect se);
+    ReturnPoolEvent<AudioEffect> onReturn;
+
 
     public void PlaySE(AudioClip clip)
     {
         source.clip = clip;
         source.loop = false;
         source.Play();
+
+        StartCoroutine(CheckPlay());
     }
 
-    private void Update()
+    IEnumerator CheckPlay()
     {
-        if(!source.isPlaying)
+        while(source.isPlaying) //만약 플레이 중이라면
         {
-            Destroy(gameObject);
+            yield return null; //1프레임 대기
         }
+        onReturn?.Invoke(this); //등록된 이벤트를 통해 반환  
+    }
+
+    public void Setup(ReturnPoolEvent<AudioEffect> onReturn)
+    {
+        this.onReturn = onReturn;
     }
 }
