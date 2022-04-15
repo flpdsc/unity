@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //델리게이트, 인터페이스 일반화
+//델리게이트 자료형으로 선언한 변수는 "함수의 주소"를 담을 수 있음
 public delegate void ReturnPoolEvent<PoolType>(PoolType pool);
+
+//인터페이스는 약속
+//해당 인터페이스를 상속한 클래스는 인터페이스 내부의 함수를 "전부 구현"해야 함
 public interface IObjectPool<PoolType>
 {
     void Setup(ReturnPoolEvent<PoolType> onReturn);
@@ -35,7 +39,7 @@ public class ObjectPool<ClassType, PoolType> : Singleton<ClassType>
     {
         PoolType newPool = Instantiate(poolPrefab); // Instantiate는 Object 받아야 하므로 where PoolType : Object 조건 필요
         newPool.transform.SetParent(storageParent); // 부모 오브젝트를 storageParent 오브젝트로 변경해야 하므로 where PoolType : Component 조건 필요         newPool.Setup(OnReturnPool); //새로 만든 pool에 되돌아 오는 이벤트 등록
-        newPool.Setup(OnReturnPool);
+        newPool.Setup(OnReturnPool); //IObjectPool<PoolType>을 상속받으므로 Setup 불러올 수 있음
         storage.Push(newPool); //스택에 저장
     }
 

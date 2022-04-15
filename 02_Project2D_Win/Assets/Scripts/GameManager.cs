@@ -52,6 +52,11 @@ public class GameManager : MonoBehaviour
         //UnityEngine.SceneManagement.SceneManager.LoadScene("Title");
     }
 
+    public void OnGameClear()
+    {
+        StartCoroutine(GameClear());
+    }
+
     private IEnumerator GameStart()
     {
         yield return new WaitForSeconds(1f);
@@ -74,5 +79,12 @@ public class GameManager : MonoBehaviour
 
         //Game¾À ·Îµå
         UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
+    }
+
+    private IEnumerator GameClear()
+    {
+        player.OnSwitchLockControl(true);
+        AudioManager.Instance.StopBGM();
+        yield return null;
     }
 }

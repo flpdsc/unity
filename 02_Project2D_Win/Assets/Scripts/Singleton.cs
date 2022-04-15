@@ -10,6 +10,7 @@ public class Singleton<T> : MonoBehaviour //Generic
     static T instance;
     public static T Instance => instance;
 
+    //d
     protected void Awake()
     {
         instance = this as T; //this(Singleton인 나)를 T 자료형으로 형 변환

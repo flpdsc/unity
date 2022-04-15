@@ -27,21 +27,18 @@ public class Movement : MonoBehaviour
             anim.SetBool("isGrounded", value);
         }
     }
-    bool isJumping;
     bool isLockControl;
+    bool isLockControlForce;
+    int jumpCount;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+    readonly int MAX_JUMP_COUNT = 2;
 
     // Update is called once per frame
     void Update()
     {
         CheckGround();
         //플레이어가 죽지 않았고 컨트롤이 막히지 않았을 경우
-        if(!player.isDead && !isLockControl)
+        if(!player.isDead && !isLockControl && !isLockControlForce)
         {
             Move();
             Jump();
@@ -50,6 +47,7 @@ public class Movement : MonoBehaviour
         //Rigidbody2D에 현재 오브젝트의 속력에 관한 변수가 있음
         //Vector2 rigid.velocity;
         anim.SetFloat("VelocityY", rigid.velocity.y);
+        anim.SetInteger("jumpCount", jumpCount);
     }
 
     void CheckGround()
@@ -68,8 +66,8 @@ public class Movement : MonoBehaviour
         if (hit.collider != null)
         {
             isGrounded = true;
-            isJumping = false;
             isLockControl = false;
+            jumpCount = MAX_JUMP_COUNT; //발이 땅에 닿았을 때 점프 카운트 횟수를 최대로 돌림
         }
     }
 
@@ -77,7 +75,10 @@ public class Movement : MonoBehaviour
     {
         int x = (int)Input.GetAxisRaw("Horizontal");
 
-        transform.Translate(Vector3.right * x * speed * Time.deltaTime);
+        //Translate는 순간이동이기 때문에 물리 처리에서 자연스럽지 않음
+        //따라서 Velocity(속력)을 이용해 캐릭터를 이동시킴
+        rigid.velocity = new Vector2(x*speed, rigid.velocity.y);
+        //transform.Translate(Vector3.right * x * speed * Time.deltaTime);
         anim.SetInteger("horizontal", x);
         if (x != 0)
             spriteRenderer.flipX = (x == -1);
@@ -88,15 +89,19 @@ public class Movement : MonoBehaviour
         //KeyDown : 키 입력하는 순간 1번
         //KeyUp : 키 떼는 순간 1번
         //Key : 누르고 있는 동안 계속
-        if (Input.GetKeyDown(KeyCode.Space) && !isJumping && isGrounded) 
+
+        //점프키를 누르고 점프횟수가 0보다 클 때
+        if (Input.GetKeyDown(KeyCode.Space) && jumpCount>0) 
         {
+            rigid.velocity = new Vector2(rigid.velocity.x, 0f); //오브젝트의 속도를 x축은 그대로 y축은 그대로 변경(2단점프 시 점프 높이 일정하도록 하기 위함)
             //Regidbody2D.AddForce(Vector3, ForceMode2D) : void
             //=>Vector3 방향 + 힘으로 힘을 가함
             //=>ForceMode2D.Force : 민다
             //=>ForceMode2D.Impulse : 폭발적인 힘을 가함
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            anim.SetTrigger("onJump");
+            jumpCount -= 1;
             AudioManager.Instance.PlaySE("jump");
-            isJumping = true;
         }
     }
 
@@ -107,9 +112,14 @@ public class Movement : MonoBehaviour
         direction.Normalize(); //벡터값 정규화
         direction.y = 1;       //y축 벡터 제거
 
-        //direction 방향으로 throwPower만큼 (한번에) 힘을 가함
-        rigid.AddForce(direction * throwPower, ForceMode2D.Impulse);
+        rigid.velocity = Vector2.zero; //기존의 속도를 0으로 만듦 (동일하게 날림)
+        rigid.AddForce(direction * throwPower, ForceMode2D.Impulse); //direction 방향으로 throwPower만큼 (한번에) 힘을 가함
         isLockControl = true;
+    }
+
+    public void OnSwitchLockControl(bool isLock)
+    {
+        isLockControlForce = isLock;
     }
 
     private void OnDrawGizmos()
