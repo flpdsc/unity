@@ -28,20 +28,24 @@ public class Movement : MonoBehaviour
         }
     }
 
-    bool isJumping;
+    int jumpCount;
     bool isLockControl;
+    bool isLockControlForce;
+
+    readonly int MAX_JUMP_COUNT = 2;
 
     void Update()
     {
         CheckGround();
 
-        if (!player.isDead && !isLockControl)
+        if (!player.isDead && !isLockControl && !isLockControlForce)
         {
             Move();
             Jump();
         }
 
         anim.SetFloat("VelocityY", rigid.velocity.y);
+        anim.SetInteger("jumpCount", jumpCount);
     }
 
     void CheckGround()
@@ -61,15 +65,15 @@ public class Movement : MonoBehaviour
         if (hit.collider != null)
         {
             isGrounded = true;
-            isJumping = false;
             isLockControl = false;
+            jumpCount = MAX_JUMP_COUNT;
         }
     }
 
     void Move()
     {
         int x = (int)Input.GetAxisRaw("Horizontal");
-        transform.Translate(Vector3.right * x * speed * Time.deltaTime);
+        rigid.velocity = new Vector2(x * speed, rigid.velocity.y);
 
         anim.SetInteger("horizontal", x);
         if (x != 0)
@@ -81,15 +85,17 @@ public class Movement : MonoBehaviour
         //KeyDown : 키 입력하는 순간 한 번
         //KeyUp : 키 떼는 순간 한 번
         //Key : 누르고 있는 동안 계속
-        if (Input.GetKeyDown(KeyCode.Space) && !isJumping && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && jumpCount>0)
         {
             //Regidbody2D.AddForce(Vector3, ForceMode2D) : Void
             //Vector3 방향 + 힘으로 힘을 가함
             //ForceMode2D.Force : 민다
             //ForceMode2D.Impulse : 폭발적인 힘 가함
+            rigid.velocity = new Vector2(rigid.velocity.x, 0f);
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            anim.SetTrigger("onJump");
+            jumpCount -= 1;
             AudioManager.Instance.PlaySE("jump");
-            isJumping = true;
         }
     }
 
@@ -100,9 +106,14 @@ public class Movement : MonoBehaviour
         direction.Normalize(); //벡터값 정규화
         direction.y = 1;       //y축 벡터 제거
 
-        //direction 방향으로 throwPower만큼 (한번에) 힘을 가함
+        rigid.velocity = Vector2.zero;
         rigid.AddForce(direction * throwPower, ForceMode2D.Impulse);
         isLockControl = true;
+    }
+
+    public void OnSwitchLockControl(bool isLock)
+    {
+        isLockControlForce = isLock;
     }
 
     private void OnDrawGizmos()

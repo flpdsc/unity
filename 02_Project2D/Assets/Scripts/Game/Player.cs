@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
     //GetComponent는 오브젝트를 검색하기 때문에 메모리 효율이 좋지 않음
     //따라서 초기화 시점에 미리 검색하고 이후에는 변수를 사용함
     SpriteRenderer spriteRenderer;
+    Movement movement;
+    Animator anim;
+
     bool isGodMode;
     bool isFallDown;
     int hp;
@@ -24,7 +27,12 @@ public class Player : MonoBehaviour
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        movement = gameObject.GetComponent<Movement>();
+        anim = GetComponent<Animator>();
+
         hp = maxHp;
+
+        StartPoint.Instance.SetStartPoint(transform);
     }
 
     public void OnContactTrap(TrapSpike trap)
@@ -33,13 +41,7 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        //내 오브젝트에서 Movement 검색
-        //이후 OnThrow함수를 trap의 transform으로 
-        Movement movement = gameObject.GetComponent<Movement>();
-        movement.OnThrow(trap.transform);
-
-        OnHit();
-
+        StartCoroutine(OnHit(trap.transform));
     }
 
     public void OnFallDown()
@@ -52,30 +54,43 @@ public class Player : MonoBehaviour
         coin += 1;
     }
 
-    private void OnHit()
+    public void OnSwitchLockControl(bool isLock)
     {
-        if(isGodMode)
-        {
-            return;
-        }
+        movement.OnSwitchLockControl(isLock);
+    }
 
+    public void OnStartHitAnim()
+    {
+        anim.SetBool("isHit", true);
+    }
+
+    public void OnEndHitAnim()
+    {
+        anim.SetBool("isHit", false);
+    }
+
+    private IEnumerator OnHit(Transform target)
+    {
         if((hp-=1) <= 0) //체력을 1 깎은 후 0 이하라면
         {
             OnDead();
-        }
-        else
-        {
-            isGodMode = true;
-            spriteRenderer.color = new Color(1, 1, 1, 0.5f); //반투명 상태
-
-            //Invoke(string, int) : void
-            //특정함수를 n초 후에 호출
-
-            //nameof(Method) : 함수명을 string 문자로 변환
-            Invoke(nameof(ReleaseGodMode), GodModeTime);
-            StartCoroutine(HitPlayer());
+            Collider2D collider = GetComponent<Collider2D>();
+            collider.isTrigger = true;
         }
 
+        isGodMode = true;
+        spriteRenderer.color = new Color(1, 1, 1, 0.5f); //반투명 상태
+        anim.SetTrigger("onHit");
+
+        //Invoke(string, int) : void
+        //특정함수를 n초 후에 호출
+
+        //nameof(Method) : 함수명을 string 문자로 변환
+        Invoke(nameof(ReleaseGodMode), GodModeTime);
+        StartCoroutine(HitPlayer());
+
+        yield return null;
+        movement.OnThrow(target);
     }
 
     private void OnDead()
