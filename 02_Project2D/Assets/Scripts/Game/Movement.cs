@@ -114,6 +114,11 @@ public class Movement : MonoBehaviour
     public void OnSwitchLockControl(bool isLock)
     {
         isLockControlForce = isLock;
+
+        if(isLock)
+        {
+            rigid.velocity = new Vector2(0f, rigid.velocity.y);
+        }
     }
 
     private void OnDrawGizmos()

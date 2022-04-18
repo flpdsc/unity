@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     [SerializeField] Player player;
     [SerializeField] GameObject gameOverPanel;
+    [SerializeField] GameObject gameClearPanel;
     [SerializeField] GameObject pausePanel;
+    //[SerializeField] GameObject sceneMover;
+
+    public int eatCount;
+    public int coin;
 
     bool isGameOver = false;
 
@@ -40,18 +45,6 @@ public class GameManager : MonoBehaviour
             AudioManager.Instance.PlaySE("light");
     }
 
-    public void OnReleasePause()
-    {
-        pausePanel.SetActive(false);
-        Time.timeScale = 1f;
-    }
-
-    public void OnExitGameScene()
-    {
-        Time.timeScale = 1f;
-        //UnityEngine.SceneManagement.SceneManager.LoadScene("Title");
-    }
-
     public void OnGameClear()
     {
         StartCoroutine(GameClear());
@@ -83,8 +76,10 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator GameClear()
     {
-        player.OnSwitchLockControl(true);
-        AudioManager.Instance.StopBGM();
-        yield return null;
+        player.OnSwitchLockControl(true); //플레이어 제어 멈추기
+        AudioManager.Instance.StopBGM(); //BGM끄기
+
+        yield return new WaitForSeconds(2f);
+        gameClearPanel.SetActive(true); //클리어 패널 활성화
     }
 }

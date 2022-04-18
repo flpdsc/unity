@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Singleton<Player>
 {
     [SerializeField] float GodModeTime;
     [SerializeField] int maxHp; //플레이어의 최대 체력

@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     [SerializeField] Player player;
     [SerializeField] GameObject gameOverPanel;
+    [SerializeField] GameObject gameClearanel;
     [SerializeField] GameObject pausePanel;
     //[SerializeField] SceneMover sceneMover;
+
+    public int coin;
 
     bool isGameOver = false;
 
@@ -80,6 +83,7 @@ public class GameManager : MonoBehaviour
     {
         player.OnSwitchLockControl(true);
         AudioManager.Instance.StopBGM();
-        yield return null;
+        yield return new WaitForSeconds(2f);
+        gameClearanel.SetActive(true);
     }
 }
