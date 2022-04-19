@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class GameClearPanel : MonoBehaviour
 {
     [SerializeField] Text eatText;
-    [SerializeField] Text coinText;
+    [SerializeField] Text goldText;
     [SerializeField] Image[] starImages;
 
     private void OnEnable()
     {
         eatText.text = "0";
-        coinText.text = "0";
+        goldText.text = "0";
         for (int i = 0; i < starImages.Length; ++i)
             starImages[i].gameObject.SetActive(false);
 
@@ -21,11 +21,13 @@ public class GameClearPanel : MonoBehaviour
 
     IEnumerator ShowResult()
     {
-        yield return new WaitForSeconds(0.2f);
-        eatText.text = Player.Instance.Coin.ToString("#,##0");
+        GameManager gm = GameManager.Instance;
 
         yield return new WaitForSeconds(0.2f);
-        coinText.text = GameManager.Instance.coin.ToString("#,##0");
+        eatText.text = gm.Eat.ToString("#,##0");
+
+        yield return new WaitForSeconds(0.2f);
+        goldText.text = gm.Gold.ToString("#,##0");
 
         yield return new WaitForSeconds(0.2f);
         for (int i = 0; i < starImages.Length; ++i)
