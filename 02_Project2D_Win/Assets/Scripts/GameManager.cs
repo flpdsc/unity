@@ -10,16 +10,42 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] GameObject pausePanel;
     //[SerializeField] GameObject sceneMover;
 
-    public int eatCount;
-    public int coin;
-
     bool isGameOver = false;
+
+    public int eatCount;
+    public int gold;
+
+    public int Eat => eatCount;
+    public int Gold => gold;
 
     private void Start()
     {
         gameOverPanel.SetActive(false);
         pausePanel.SetActive(false);
+        gameClearPanel.SetActive(false);
         StartCoroutine(GameStart());
+    }
+
+    void Save()
+    {
+        PlayerPrefs.SetInt("Eat", eatCount);
+        PlayerPrefs.SetInt("Gold", gold);
+    }
+
+    void Load()
+    {
+        eatCount = PlayerPrefs.GetInt("Eat", 0);
+        gold = PlayerPrefs.GetInt("Gold", 0);
+    }
+
+    public void AddEatCount(int amount=0)
+    {
+        eatCount += amount;
+    }
+
+    public void AddGold(int amount)
+    {
+        gold += amount;
     }
 
     private void Update()
@@ -47,11 +73,13 @@ public class GameManager : Singleton<GameManager>
 
     public void OnGameClear()
     {
+        Save();
         StartCoroutine(GameClear());
     }
 
     private IEnumerator GameStart()
     {
+        Load();
         yield return new WaitForSeconds(1f);
         AudioManager.Instance.PlayBGM(); //ΩÃ±€≈Ê¿ª ¿ÃøÎ«ÿ AudioManager ∞¥√ºø° ¡¢±Ÿ
     }
