@@ -16,12 +16,10 @@ public class Player : Singleton<Player>
     bool isGodMode;
     bool isFallDown; //플레이어가 아래로 떨어졌음
     int hp;   //현재 체력
-    int coin; //보유 코인
 
     //프로퍼티
     public bool isDead => (hp <= 0) || isFallDown; //isDead는 참조만 가능하며 리턴값은 아래 조건 연산자의 결과 값임
     public int Hp => hp; //Hp를 참조하면 hp값을 리턴
-    public int Coin => coin; //Coin을 참조하면 coin값을 리턴
 
     private void Start()
     {
@@ -45,7 +43,7 @@ public class Player : Singleton<Player>
 
     public void OnContactCoin(Coin target)
     {
-        coin += 1;
+        GameManager.Instance.AddEatCount(1);
     }
 
     public void OnFallDown()

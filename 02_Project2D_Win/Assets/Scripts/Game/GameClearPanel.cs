@@ -7,7 +7,7 @@ public class GameClearPanel : MonoBehaviour
 {
 
     [SerializeField] Text eatText;
-    [SerializeField] Text coinText;
+    [SerializeField] Text goldText;
     [SerializeField] Image[] starIamges;
     [SerializeField] Button[] buttons;
 
@@ -15,7 +15,7 @@ public class GameClearPanel : MonoBehaviour
     private void OnEnable()
     {
         eatText.text = "0";
-        coinText.text = "0";
+        goldText.text = "0";
         for (int i = 0; i < starIamges.Length; ++i)
         {
             starIamges[i].gameObject.SetActive(false);
@@ -37,11 +37,12 @@ public class GameClearPanel : MonoBehaviour
 
     IEnumerator ShowResult()
     {
+        GameManager gm = GameManager.Instance;
+
         yield return new WaitForSeconds(0.5f);
-        eatText.text = Player.Instance.Coin.ToString("#,##0");
-        //eatText.text = string.Format("{0:#,##0}G", GameManager.Instance.eatCount);
+        eatText.text = gm.Eat.ToString("#,##0");
         yield return new WaitForSeconds(0.5f);
-        coinText.text = GameManager.Instance.coin.ToString("#,##0");
+        goldText.text = gm.Gold.ToString("#,##0");
         yield return new WaitForSeconds(0.5f);
         for(int i=0; i< starIamges.Length; ++i)
         {
