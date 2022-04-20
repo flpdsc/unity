@@ -1,0 +1,49 @@
+{
+    "items": [
+        {
+            "name": "롱소드 40",
+            "grade": "Hero",
+            "str": 100,
+            "dex": 200,
+            "ap": 10,
+            "luk": 50,
+            "level": 200
+        },
+        {
+            "name": "롱소드 53",
+            "grade": "Hero",
+            "str": 100,
+            "dex": 200,
+            "ap": 10,
+            "luk": 50,
+            "level": 200
+        },
+        {
+            "name": "롱소드 6",
+            "grade": "Hero",
+            "str": 100,
+            "dex": 200,
+            "ap": 10,
+            "luk": 50,
+            "level": 200
+        },
+        {
+            "name": "롱소드 2",
+            "grade": "Hero",
+            "str": 100,
+            "dex": 200,
+            "ap": 10,
+            "luk": 50,
+            "level": 200
+        },
+        {
+            "name": "롱소드 84",
+            "grade": "Hero",
+            "str": 100,
+            "dex": 200,
+            "ap": 10,
+            "luk": 50,
+            "level": 200
+        }
+    ]
+}
