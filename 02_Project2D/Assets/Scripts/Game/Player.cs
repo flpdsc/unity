@@ -33,7 +33,7 @@ public class Player : Singleton<Player>
         StartPoint.Instance.SetStartPoint(transform);
     }
 
-    public void OnContactTrap(TrapSpike trap)
+    public void OnContactTrap(GameObject trap)
     {
         if (isGodMode)
         {

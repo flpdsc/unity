@@ -45,7 +45,7 @@ public class TrapSpike : MonoBehaviour
         Player player = collision.gameObject.GetComponent<Player>();
         if (player != null)
         {
-            player.OnContactTrap(this);
+            player.OnContactTrap(gameObject);
             AudioManager.Instance.PlaySE("hurt");
         }
     }
