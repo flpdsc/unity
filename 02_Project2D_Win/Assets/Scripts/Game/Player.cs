@@ -6,12 +6,18 @@ public class Player : Singleton<Player>
     [SerializeField] float GodModeTime;
     [SerializeField] int maxHp; //플레이어의 최대 체력
 
+    [Header("Attack")]
+    [SerializeField] Transform footPivot;
+    [SerializeField] float attackRadius;
+    [SerializeField] LayerMask attackMask;
+
     //참조형 변수들은 캐싱해서 쓰는 것이 좋음
     //GetComponent는 오브젝트를 검색하기 때문에 메모리 효율이 좋지 않음
     //따라서 초기화 시점에 미리 검색하고 이후에는 변수를 사용함
     SpriteRenderer spriteRenderer;
     Movement movement;
     Animator anim;
+    Rigidbody2D rigid;
 
     bool isGodMode;
     bool isFallDown; //플레이어가 아래로 떨어졌음
@@ -26,19 +32,45 @@ public class Player : Singleton<Player>
         spriteRenderer = GetComponent<SpriteRenderer>();
         movement = gameObject.GetComponent<Movement>();
         anim = GetComponent<Animator>();
+        rigid = GetComponent<Rigidbody2D>();
 
         hp = maxHp;
 
         StartPoint.Instance.SetStartPoint(transform);
     }
-    
+
+    private void Update()
+    {
+        OnCheckAttack();
+    }
+
+    private void OnCheckAttack()
+    {
+        if(rigid.velocity.y >= 0f)
+        {
+            return;
+        }
+        Collider2D contact = Physics2D.OverlapCircle(footPivot.position, attackRadius, attackMask);
+
+        if(contact != null)
+        {
+            EnemyTree enemy = contact.GetComponent<EnemyTree>();
+            if(enemy!=null)
+            {
+                enemy.OnDamaged();
+                rigid.velocity = new Vector2(rigid.velocity.x, 0f);
+                rigid.AddForce(Vector2.up * 8f, ForceMode2D.Impulse);
+            }
+        }
+    }
+
     public void OnContactTrap(GameObject trap)
     {
         if (isGodMode)
         {
             return;
         }
-        StartCoroutine(OnHit(trap.transform));
+        StartCoroutine(OnHit(trap.transform.position));
     }
 
     public void OnContactCoin(Coin target)
@@ -61,7 +93,7 @@ public class Player : Singleton<Player>
         anim.SetBool("isHit", false);
     }
 
-    private IEnumerator OnHit(Transform target)
+    private IEnumerator OnHit(Vector3 hitPosition)
     {
         if ((hp -= 1) <= 0) //체력을 1 깎은 후 0 이하라면,
         {
@@ -84,7 +116,7 @@ public class Player : Singleton<Player>
         //내 오브젝트에서 Movement 검색
         //이후 OnThrow함수를 trap의 transform으로 보내 호출
         yield return null;
-        movement.OnThrow(target);
+        movement.OnThrow(hitPosition);
     }
 
     private void OnDead()
@@ -110,6 +142,15 @@ public class Player : Singleton<Player>
             yield return new WaitForSeconds(0.1f);
             spriteRenderer.color = white;
             yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if(footPivot!=null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(footPivot.position, attackRadius);
         }
     }
 }

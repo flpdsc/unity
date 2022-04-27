@@ -107,8 +107,13 @@ public class Movement : MonoBehaviour
 
     public void OnThrow(Transform targetPivot)
     {
+        OnThrow(targetPivot.position);
+    }
+
+    public void OnThrow(Vector3 targetPosition)
+    { 
         //내 위치 - 상대방의 위치 = 상대방에서 내 위치로 보는 방향
-        Vector3 direction = transform.position - targetPivot.position;
+        Vector3 direction = transform.position - targetPosition;
         direction.Normalize(); //벡터값 정규화
         direction.y = 1;       //y축 벡터 제거
 
