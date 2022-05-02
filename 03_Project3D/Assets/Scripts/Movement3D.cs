@@ -4,32 +4,51 @@ using UnityEngine;
 
 public class Movement3D : MonoBehaviour
 {
-    [SerializeField] float moveSpeed;
-    [SerializeField] float jumpPower;
+    [Header("Value")]
+    [SerializeField] float moveSpeed = 5; //이동 속도 
+    [SerializeField] float jumpHeight = 3; //점프 높이 
+    [Range(1.0f, 3.0f)]
+    [SerializeField] float gravityScale = 2.95f; //중력 배수 
 
     [Header("Ground")]
-    [SerializeField] Transform groundPivot;
-    [SerializeField] float groundRadius;
-    [SerializeField] LayerMask groundMask;
+    [SerializeField] Transform groundPivot; //지면 체크 중심점 
+    [SerializeField] float groundRadius; //지면 체크 구의 반지름 
+    [SerializeField] LayerMask groundMask; //지면 레이어 마스크 
 
-    Rigidbody rigid;
+    CharacterController controller; //캐릭터 컨트롤러 클래스 
     bool isGrounded;
+    Vector3 velocity; //현재 플레이어 속도 
+
+    float gravity => -9.81f * gravityScale; //실제 중력 가속도 * 중력 배수 
 
     private void Start()
     {
-        rigid = GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
     }
 
     private void Update()
     {
-        CheckGround();
-        Move();
-        Jump();
-    }
-
-    private void CheckGround()
-    {
         isGrounded = Physics.CheckSphere(groundPivot.position, groundRadius, groundMask);
+
+        //지면에 도달했지만 여전히 속도가 하강하고 있을 때 
+        if(isGrounded && velocity.y<0f)
+        {
+            //작은 값을 줘서 착지할 수 있도록 함 
+            velocity.y = -2f;
+        }
+
+        Move();
+
+        //점프 
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        {
+            //(H * -2f * G)^2 물리공식에 의해 Vector.up 방향으로 속도를 가함 
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+
+        //계속 중력을 받기 때문에 중력값을 더함 
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
     }
 
     private void Move()
@@ -44,20 +63,7 @@ public class Movement3D : MonoBehaviour
         //movement : 이동량 
         //방향에 -1을 곱하면 반대가 됨
         Vector3 direction = (transform.right * x) + (transform.forward * z);
-        Vector3 velocity = direction * moveSpeed;
-
-        velocity.y = rigid.velocity.y;
-
-        //transform.position += movement;
-        rigid.velocity = velocity;
-    }
-
-    private void Jump()
-    {
-        if(isGrounded && Input.GetKeyDown(KeyCode.Space))
-        {
-            rigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
-        }
+        controller.Move(direction * moveSpeed * Time.deltaTime);
     }
 
     private void OnDrawGizmos()
