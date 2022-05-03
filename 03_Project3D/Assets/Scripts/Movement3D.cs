@@ -15,7 +15,8 @@ public class Movement3D : MonoBehaviour
     [SerializeField] float groundRadius; //지면 체크 구의 반지름 
     [SerializeField] LayerMask groundMask; //지면 레이어 마스크 
 
-    CharacterController controller; //캐릭터 컨트롤러 클래스 
+    CharacterController controller; //캐릭터 컨트롤러 클래스
+    Animator anim;
     bool isGrounded;
     Vector3 velocity; //현재 플레이어 속도 
 
@@ -24,11 +25,13 @@ public class Movement3D : MonoBehaviour
     private void Start()
     {
         controller = GetComponent<CharacterController>();
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
     {
         isGrounded = Physics.CheckSphere(groundPivot.position, groundRadius, groundMask);
+        anim.SetBool("isGrounded", isGrounded);
 
         //지면에 도달했지만 여전히 속도가 하강하고 있을 때 
         if(isGrounded && velocity.y<0f)
@@ -44,6 +47,7 @@ public class Movement3D : MonoBehaviour
         {
             //(H * -2f * G)^2 물리공식에 의해 Vector.up 방향으로 속도를 가함 
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            anim.SetTrigger("onJump");
         }
 
         //계속 중력을 받기 때문에 중력값을 더함 
@@ -53,8 +57,8 @@ public class Movement3D : MonoBehaviour
 
     private void Move()
     {
-        float x = Input.GetAxisRaw("Horizontal"); //오른쪽 : 1, 왼쪽 : -1
-        float z = Input.GetAxisRaw("Vertical"); //위쪽 : 1, 아래쪽 -1
+        float x = Input.GetAxis("Horizontal"); //오른쪽 : 1, 왼쪽 : -1
+        float z = Input.GetAxis("Vertical"); //위쪽 : 1, 아래쪽 -1
 
         //Vector3.right : 월드 좌표 기준으로 오른쪽 방향값
         //transform.right : 나를 기준으로 오른쪽 방향값
@@ -64,6 +68,9 @@ public class Movement3D : MonoBehaviour
         //방향에 -1을 곱하면 반대가 됨
         Vector3 direction = (transform.right * x) + (transform.forward * z);
         controller.Move(direction * moveSpeed * Time.deltaTime);
+
+        anim.SetFloat("horizontal", x);
+        anim.SetFloat("vertical", z);
     }
 
     private void OnDrawGizmos()

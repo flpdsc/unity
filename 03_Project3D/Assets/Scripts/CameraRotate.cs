@@ -53,7 +53,7 @@ public class CameraRotate : MonoBehaviour
 
         //수평 회전
         //마우스의 수직 이동량에 따라 rotateX의 값을 변환 (단, 각도에 제한을 둠)
-        rotateX = Mathf.Clamp(rotateX - axis.y, -60f, 10f);
+        rotateX = Mathf.Clamp(rotateX - axis.y, -60f, 30f);
         PlayerEye.localRotation = Quaternion.Euler(rotateX, 0f, 0f);
 
     }
