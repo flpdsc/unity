@@ -5,6 +5,7 @@ using UnityEngine;
 public class Movement3D : MonoBehaviour
 {
     [Header("Value")]
+    [SerializeField] Animator anim;
     [SerializeField] float moveSpeed = 5; //이동 속도 
     [SerializeField] float jumpHeight = 3; //점프 높이 
     [Range(1.0f, 3.0f)]
@@ -16,7 +17,6 @@ public class Movement3D : MonoBehaviour
     [SerializeField] LayerMask groundMask; //지면 레이어 마스크 
 
     CharacterController controller; //캐릭터 컨트롤러 클래스
-    Animator anim;
     bool isGrounded;
     Vector3 velocity; //현재 플레이어 속도 
 
@@ -25,7 +25,6 @@ public class Movement3D : MonoBehaviour
     private void Start()
     {
         controller = GetComponent<CharacterController>();
-        anim = GetComponent<Animator>();
     }
 
     private void Update()
