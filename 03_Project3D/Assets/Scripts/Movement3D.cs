@@ -30,7 +30,7 @@ public class Movement3D : MonoBehaviour
     private void Update()
     {
         isGrounded = Physics.CheckSphere(groundPivot.position, groundRadius, groundMask);
-        anim.SetBool("isGrounded", isGrounded);
+        //anim.SetBool("isGrounded", isGrounded);
 
         //지면에 도달했지만 여전히 속도가 하강하고 있을 때 
         if(isGrounded && velocity.y<0f)
@@ -46,7 +46,7 @@ public class Movement3D : MonoBehaviour
         {
             //(H * -2f * G)^2 물리공식에 의해 Vector.up 방향으로 속도를 가함 
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            anim.SetTrigger("onJump");
+            //anim.SetTrigger("onJump");
         }
 
         //계속 중력을 받기 때문에 중력값을 더함 
@@ -58,6 +58,7 @@ public class Movement3D : MonoBehaviour
     {
         float x = Input.GetAxis("Horizontal"); //오른쪽 : 1, 왼쪽 : -1
         float z = Input.GetAxis("Vertical"); //위쪽 : 1, 아래쪽 -1
+        bool isRun = Input.GetKey(KeyCode.LeftShift);
 
         //Vector3.right : 월드 좌표 기준으로 오른쪽 방향값
         //transform.right : 나를 기준으로 오른쪽 방향값
@@ -66,10 +67,16 @@ public class Movement3D : MonoBehaviour
         //movement : 이동량 
         //방향에 -1을 곱하면 반대가 됨
         Vector3 direction = (transform.right * x) + (transform.forward * z);
-        controller.Move(direction * moveSpeed * Time.deltaTime);
+        Vector3 movement = direction * moveSpeed * Time.deltaTime;
+        movement *= isRun ? 1.5f : 1.0f;
 
-        anim.SetFloat("horizontal", x);
-        anim.SetFloat("vertical", z);
+        controller.Move(movement);
+
+        anim.SetBool("isWalk", movement != Vector3.zero);
+        anim.SetBool("isRun", isRun);
+
+        //anim.SetFloat("horizontal", x);
+        //anim.SetFloat("vertical", z);
     }
 
     private void OnDrawGizmos()
