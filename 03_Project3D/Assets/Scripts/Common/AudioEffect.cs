@@ -8,10 +8,11 @@ public class AudioEffect : MonoBehaviour, IObjectPool<AudioEffect>
 
     ReturnPoolEvent<AudioEffect> onReturn;
 
-    public void PlaySE(AudioClip clip)
+    public void PlaySE(AudioClip clip, float volume)
     {
         source.clip = clip;       
-        source.loop = false;    
+        source.loop = false;
+        source.volume = volume;
         source.Play();         
 
         StartCoroutine(CheckPlay());

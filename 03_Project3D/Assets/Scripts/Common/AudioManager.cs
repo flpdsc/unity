@@ -21,7 +21,7 @@ public class AudioManager : ObjectPool<AudioManager, AudioEffect>
     {
         audioSource.Stop();        
     }
-    public void PlaySE(string name)
+    public void PlaySE(string name, float volume = 1.0f)
     {
         for(int i = 0; i< effects.Length; i++)
         {
@@ -29,8 +29,8 @@ public class AudioManager : ObjectPool<AudioManager, AudioEffect>
             if(effects[i].name == name)
             {
                 AudioClip clip = effects[i];                    
-                AudioEffect effect = GetPool();                 
-                effect.PlaySE(clip);                          
+                AudioEffect effect = GetPool();
+                effect.PlaySE(clip, volume);                          
                 break;
             }
         }
