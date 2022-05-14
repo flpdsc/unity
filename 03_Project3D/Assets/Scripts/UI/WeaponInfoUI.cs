@@ -8,9 +8,9 @@ public class WeaponInfoUI : Singleton<WeaponInfoUI>
     [SerializeField] Text maxBulletText;
     [SerializeField] Text currentBulletText;
 
-    private void Update()
+    public void UpdateBulletText(int current, int max)
     {
-        maxBulletText.text = PlayerController.Instance.MaxBullet.ToString();
-        currentBulletText.text = PlayerController.Instance.CurrentBullet.ToString();
+        maxBulletText.text = max.ToString();
+        currentBulletText.text = current.ToString();
     }
 }

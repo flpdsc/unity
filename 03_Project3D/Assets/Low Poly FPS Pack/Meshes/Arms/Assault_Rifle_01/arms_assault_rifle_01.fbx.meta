@@ -847,8 +847,8 @@ ModelImporter:
       curves: []
       events:
       - time: 0.7548638
-        functionName: OnSendMessage
-        data: OnEndReload
+        functionName: OnEndReload
+        data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
