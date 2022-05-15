@@ -11,26 +11,42 @@ public class PlayerController : Singleton<PlayerController>
 
     private void Update()
     {
-        if(weapon != null)
+        if (weapon != null)
         {
             Fire();
             Reload();
+            ChageFireType();
         }
     }
 
     private void Fire()
     {
-        if(Input.GetMouseButton(0) && weapon.Fire())
+        if (Input.GetMouseButton(0))
         {
-            anim.SetTrigger("onFire");
+            if (weapon.StartFire())
+            {
+                anim.SetTrigger("onFire");
+            }
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            weapon.EndFire();
         }
     }
 
     private void Reload()
     {
-        if(Input.GetKeyDown(KeyCode.R) && weapon.Reload())
+        if (Input.GetKeyDown(KeyCode.R) && weapon.Reload())
         {
             anim.SetTrigger("onReload");
+        }
+    }
+
+    private void ChageFireType()
+    {
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            weapon.OnChangeType();
         }
     }
 }

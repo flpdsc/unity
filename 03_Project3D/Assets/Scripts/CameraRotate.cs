@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraRotate : MonoBehaviour
+public class CameraRotate : Singleton<CameraRotate>
 {
     const string KEY_MOUSE_X = "SensitivityX";
     const string KEY_MOUSE_Y = "SensitivityY";
 
     [SerializeField] Transform playerBody;
-    [SerializeField] Transform PlayerEye;
+    [SerializeField] Transform playerEye;
 
     [Range(-90.0f, 0.0f)]
     [SerializeField] float limitUp;
@@ -20,7 +20,8 @@ public class CameraRotate : MonoBehaviour
     [Range(1f, 1000f)]
     [SerializeField] float sensitivityY; //수직 감도 
 
-    float rotateX; //수평 회전 각도 
+    float rotateX; //수평 회전 각도
+    Vector2 recoil; //총기 반동에 의한 값 
 
     private void Start()
     {
@@ -53,14 +54,22 @@ public class CameraRotate : MonoBehaviour
 
     private void OnMouseLook(Vector2 axis)
     {
+        //수직, 수평에 대한 반동 회전값 더하기
+        axis += recoil;
+        recoil = Vector2.zero;
+
         //수직 회전
         playerBody.Rotate(Vector2.up * axis.x);
 
         //수평 회전
         //마우스의 수직 이동량에 따라 rotateX의 값을 변환 (단, 각도에 제한을 둠)
         rotateX = Mathf.Clamp(rotateX - axis.y, limitUp, limitDown);
-        PlayerEye.localRotation = Quaternion.Euler(rotateX, 0f, 0f);
+        playerEye.localRotation = Quaternion.Euler(rotateX, 0f, 0f);
+    }
 
+    public void AddRecoil(Vector2 recoil)
+    {
+        this.recoil = recoil;
     }
 
     private void OnApplicationQuit()
