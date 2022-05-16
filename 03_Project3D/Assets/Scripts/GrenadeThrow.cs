@@ -5,15 +5,29 @@ using UnityEngine;
 public class GrenadeThrow : MonoBehaviour
 {
     [SerializeField] Grenade grenadePrefab;
+    [SerializeField] Transform eye;
+    [SerializeField] Transform createPivot;
     [SerializeField] float throwPower;
 
-    private void Update()
+    [Header("count")]
+    [SerializeField] int grenadeCount;
+
+    private void Start()
     {
-        if(Input.GetKeyDown(KeyCode.G))
+        WeaponInfoUI.Instance.UpdateGrenadeCount(grenadeCount);
+    }
+
+    public void OnThrowGrenade()
+    {
+        if(grenadeCount <= 0)
         {
-            Vector3 position = transform.position + (transform.forward * 1f);
-            Grenade grenade = Instantiate(grenadePrefab, position, Quaternion.identity);
-            grenade.Throw(transform.forward, throwPower);
+            return;
         }
+        grenadeCount--;
+        Vector3 position = createPivot.position;
+        Grenade grenade = Instantiate(grenadePrefab, position, Quaternion.identity);
+        grenade.Throw(eye.forward, throwPower);
+
+        WeaponInfoUI.Instance.UpdateGrenadeCount(grenadeCount);
     }
 }

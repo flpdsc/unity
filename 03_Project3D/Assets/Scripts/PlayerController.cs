@@ -7,16 +7,24 @@ using UnityEngine;
 public class PlayerController : Singleton<PlayerController>
 {
     [SerializeField] Animator anim; //애니메이터
-    [SerializeField] WeaponController weapon; //무기 
+    [SerializeField] WeaponController weapon; //무기
+    [SerializeField] GrenadeThrow grenadeThrow; //수류탄
+
+    [Header("Eye")]
+    [SerializeField] Transform eye; //눈
+    [SerializeField] Transform normalCamera; //일반 시야 위치 
+    [SerializeField] Transform aimCamera; //에임 시야 위치 
 
     private void Update()
     {
-        if (weapon != null)
+        if (weapon != null || !weapon.isReload)
         {
             Fire();
             Reload();
-            ChageFireType();
+            Grenade();
         }
+        ChageFireType();
+        Aim();
     }
 
     private void Fire()
@@ -34,12 +42,32 @@ public class PlayerController : Singleton<PlayerController>
         }
     }
 
+    private void Aim()
+    {
+        if(Input.GetMouseButtonDown(1))
+        {
+            anim.SetTrigger("onAim");
+        }
+        bool isAim = Input.GetMouseButton(1);
+        anim.SetBool("isAim", isAim);
+        eye.position = isAim ? aimCamera.position : normalCamera.position;
+        CrossHairUI.Instance.SwitchCrosshair(!isAim);
+    }
     private void Reload()
     {
         if (Input.GetKeyDown(KeyCode.R) && weapon.Reload())
         {
             anim.SetTrigger("onReload");
         }
+    }
+
+    private void Grenade()
+    {
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            grenadeThrow.OnThrowGrenade();
+        }
+
     }
 
     private void ChageFireType()
