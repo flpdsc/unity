@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 23002528}
   - component: {fileID: 23002530}
   - component: {fileID: 23002529}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: HpImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -420,7 +420,7 @@ MonoBehaviour:
   grenadePrefab: {fileID: 5231250542566350234, guid: 78f66c296fefe4b078b2cd1f281917da, type: 3}
   eye: {fileID: 1738534281}
   createPivot: {fileID: 1107135614}
-  throwPower: 20
+  throwPower: 2
   grenadeCount: 10
 --- !u!1 &198362778
 GameObject:
@@ -532,7 +532,7 @@ GameObject:
   - component: {fileID: 212324027}
   - component: {fileID: 212324026}
   - component: {fileID: 212324025}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Hpbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -648,9 +648,7 @@ GameObject:
   - component: {fileID: 236839846}
   - component: {fileID: 236839849}
   - component: {fileID: 236839848}
-  - component: {fileID: 236839847}
-  - component: {fileID: 236839850}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -672,20 +670,6 @@ Transform:
   m_Father: {fileID: 401714508}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &236839847
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 236839845}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &236839848
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -736,20 +720,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 236839845}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!136 &236839850
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 236839845}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &262655866
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,7 +1006,7 @@ GameObject:
   - component: {fileID: 337419481}
   - component: {fileID: 337419483}
   - component: {fileID: 337419482}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: HpText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1114,9 +1084,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 401714508}
-  - component: {fileID: 401714509}
   - component: {fileID: 401714510}
-  m_Layer: 9
+  - component: {fileID: 401714511}
+  - component: {fileID: 401714509}
+  - component: {fileID: 401714512}
+  m_Layer: 10
   m_Name: Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1154,8 +1126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpBar: {fileID: 212324025}
-  maxHP: 100
-  hp: 50
+  stat: {fileID: 401714511}
 --- !u!136 &401714510
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1170,6 +1141,52 @@ CapsuleCollider:
   m_Height: 1.12
   m_Direction: 1
   m_Center: {x: 0, y: -0.49, z: 0}
+--- !u!114 &401714511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401714507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7be4b9f5266fe453fa474a7efb04b7ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: "\uC7A1\uBAB9A"
+  hp: 100
+  maxHp: 100
+--- !u!114 &401714512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401714507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7a32129576c143a1a5988c845938a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stat: {fileID: 401714511}
+  onDamageEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 401714509}
+        m_TargetAssemblyTypeName: Target, Assembly-CSharp
+        m_MethodName: UpdateHp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDeadEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &422406353
 GameObject:
   m_ObjectHideFlags: 0
@@ -2095,8 +2112,7 @@ GameObject:
   - component: {fileID: 1077191686}
   - component: {fileID: 1077191689}
   - component: {fileID: 1077191688}
-  - component: {fileID: 1077191687}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2118,19 +2134,6 @@ Transform:
   m_Father: {fileID: 401714508}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1077191687
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1077191685}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1077191688
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2372,6 +2375,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1143086906}
   m_CullTransparentMesh: 1
+--- !u!1 &1178649861
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1178649863}
+  - component: {fileID: 1178649862}
+  m_Layer: 0
+  m_Name: DamageManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1178649862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178649861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ece34c6756b4a58855e2af86a48bd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolPrefab: {fileID: -5271035246495933124, guid: 4da07da6f21fc4a40b5df098fb32d827, type: 3}
+  storageParent: {fileID: 1695676448}
+  poolCount: 30
+--- !u!4 &1178649863
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178649861}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.1203357, y: 1, z: 5.86}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1695676448}
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1231181463
 GameObject:
   m_ObjectHideFlags: 0
@@ -2885,7 +2936,7 @@ GameObject:
   - component: {fileID: 1680831806}
   - component: {fileID: 1680831809}
   - component: {fileID: 1680831808}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: HpBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2950,6 +3001,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1680831805}
   m_CullTransparentMesh: 1
+--- !u!1 &1695676447
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1695676448}
+  m_Layer: 0
+  m_Name: Storage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1695676448
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695676447}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1178649863}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1738534280
 GameObject:
   m_ObjectHideFlags: 0

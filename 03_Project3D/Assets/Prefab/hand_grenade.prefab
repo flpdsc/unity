@@ -103,6 +103,10 @@ MonoBehaviour:
   delay: 2
   explodeRadius: 4
   explodeForce: 800
+  damagePower: 90
+  damageMask:
+    serializedVersion: 2
+    m_Bits: 1664
 --- !u!54 &4962381666707817529
 Rigidbody:
   m_ObjectHideFlags: 0
