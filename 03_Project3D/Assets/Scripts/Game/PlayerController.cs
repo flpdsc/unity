@@ -25,6 +25,12 @@ public class PlayerController : Singleton<PlayerController>
             Reload();
             Grenade();
         }
+
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            InventoryUI.Instance.SwitchInventory();
+        }
+
         ChageFireType();
         Aim();
     }

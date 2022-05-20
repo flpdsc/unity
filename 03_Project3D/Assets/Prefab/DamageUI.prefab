@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2096318138537702262}
   - component: {fileID: 8769046336524217289}
   - component: {fileID: -5271035246495933124}
+  - component: {fileID: 8153335574692955562}
   m_Layer: 5
   m_Name: DamageUI
   m_TagString: Untagged
@@ -115,7 +116,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageText: {fileID: 641164896785217385}
-  showTime: 1
+  rigid: {fileID: 8153335574692955562}
+  showTime: 0.4
+  fadeTime: 0.3
+  showType: 1
+--- !u!54 &8153335574692955562
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2445844137499038252}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &7075405621219035167
 GameObject:
   m_ObjectHideFlags: 0
