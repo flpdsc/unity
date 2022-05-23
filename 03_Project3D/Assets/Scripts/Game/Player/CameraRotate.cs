@@ -21,12 +21,15 @@ public class CameraRotate : Singleton<CameraRotate>
     [SerializeField] float sensitivityY; //수직 감도 
 
     float rotateX; //수평 회전 각도
-    Vector2 recoil; //총기 반동에 의한 값 
+    Vector2 recoil; //총기 반동에 의한 값
+    InventoryUI inventoryUI;
 
     private void Start()
     {
         sensitivityX = PlayerPrefs.GetFloat(KEY_MOUSE_X, 200f);
         sensitivityY = PlayerPrefs.GetFloat(KEY_MOUSE_Y, 100f);
+
+        inventoryUI = InventoryUI.Instance;
 
         Cursor.lockState = CursorLockMode.Locked; //마우스 고정 
     }
@@ -35,6 +38,13 @@ public class CameraRotate : Singleton<CameraRotate>
     {
         //GetAxisRaw : -1, 0, 1
         //GetAxis : -1.0f ~ 1.0f
+
+        //인벤토리가 열려있으면 마우(시점)회전을 하지 않음 
+        if(inventoryUI.isOpen)
+        {
+            return;
+        }
+
         float mouseX = Input.GetAxis("Mouse X") * sensitivityX * 0.005f; //마우스 x축 이동량
         float mouseY = Input.GetAxis("Mouse Y") * sensitivityY * 0.005f; //마우스 y축 이동량 
 

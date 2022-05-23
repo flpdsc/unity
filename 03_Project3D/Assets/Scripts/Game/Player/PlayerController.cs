@@ -9,6 +9,7 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] Animator anim; //애니메이터
     [SerializeField] WeaponController weapon; //무기
     [SerializeField] GrenadeThrow grenadeThrow; //수류탄
+    [SerializeField] Inventory inven; //인벤토리 
 
     [Header("Eye")]
     [SerializeField] Camera eye; //눈
@@ -28,7 +29,22 @@ public class PlayerController : Singleton<PlayerController>
 
         if(Input.GetKeyDown(KeyCode.I))
         {
-            InventoryUI.Instance.SwitchInventory();
+            //인벤토리가 열렸으면 마우스 풀고 닫히면 락 
+            bool isOpen = InventoryUI.Instance.SwitchInventory();
+            if(isOpen)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Item item = ItemManager.Instance.GetItem("Potion", 20);
+            inven.AddItem(item);
         }
 
         ChageFireType();
