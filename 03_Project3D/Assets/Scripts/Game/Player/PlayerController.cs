@@ -20,7 +20,7 @@ public class PlayerController : Singleton<PlayerController>
 
     private void Update()
     {
-        if (weapon != null || !weapon.isReload)
+        if (weapon != null && !weapon.isReload && !InventoryUI.Instance.isOpen)
         {
             Fire();
             Reload();

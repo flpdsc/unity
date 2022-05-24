@@ -6,11 +6,13 @@ using UnityEngine.EventSystems;
 
 public class InventoryUI : Singleton<InventoryUI> //, IPointerClickHandler
 {
-    [SerializeField] ItemSlotUI[] itemSlots; //모든 아이템 슬롯들 
+    [SerializeField] Transform slotParent;
+    [SerializeField] ItemSlotUI dragSlot;
     [SerializeField] UnityEvent OnOpenEvent;
     [SerializeField] UnityEvent OnCloseEvent;
 
     Transform[] allChilds; //모든 자식 오브젝트 (활성/비활성화에 사용)
+    ItemSlotUI[] itemSlots;
 
     public bool isOpen;
 
@@ -22,6 +24,14 @@ public class InventoryUI : Singleton<InventoryUI> //, IPointerClickHandler
         {
             allChilds[i] = transform.GetChild(i);
         }
+
+        //모든 하위 자식의 ItemSlotUI를 가져옴 
+        //itemSlots = new ItemSlotUI[slotParent.childCount];
+        //for(int i=0; i<itemSlots.Length; ++i)
+        //{
+        //    itemSlots[i] = transform.GetChild(i).GetComponent<ItemSlotUI>();
+        //}
+        itemSlots = slotParent.GetComponentsInChildren<ItemSlotUI>();
 
         SwitchInventory(false);
     }
@@ -69,5 +79,22 @@ public class InventoryUI : Singleton<InventoryUI> //, IPointerClickHandler
         {
             itemSlots[i].Setup(items[i]);
         }
+    }
+
+    //아이템 슬롯 드래그
+    public void OnBeginDrag(Item item)
+    {
+        dragSlot.gameObject.SetActive(true);
+        dragSlot.Setup(item);
+    }
+
+    public void OnSlotDrag()
+    {
+        dragSlot.transform.position = Input.mousePosition;
+    }
+
+    public void OnEndSlotDrag()
+    {
+        dragSlot.gameObject.SetActive(false);
     }
 }

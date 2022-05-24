@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+
 public class Item
 {
     public ItemData data;
     public int count;
+
 
     public string itemName => data.itemName;
     public string description => data.itemDescription;
@@ -16,6 +17,10 @@ public class Item
     {
         this.data = data;
         this.count = count;
+    }
 
+    public override string ToString()
+    {
+        return data.ToString();
     }
 }
