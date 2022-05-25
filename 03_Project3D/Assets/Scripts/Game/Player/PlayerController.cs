@@ -18,6 +18,13 @@ public class PlayerController : Singleton<PlayerController>
 
     bool isAim;
 
+    private void Start()
+    {
+        inven.AddItem(ItemManager.Instance.GetItem("Armor", 1));
+        inven.AddItem(ItemManager.Instance.GetItem("Potion", 10));
+        inven.AddItem(ItemManager.Instance.GetItem("Helmet", 2));
+    }
+
     private void Update()
     {
         if (weapon != null && !weapon.isReload && !InventoryUI.Instance.isOpen)

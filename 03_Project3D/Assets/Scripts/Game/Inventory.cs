@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Inventory : Singleton<Inventory>
 {
     public Item[] items;
 
     const int MAX_INVENTORY = 20;
 
-    private void Start()
+    private new void Awake()
     {
+        base.Awake();
         items = new Item[MAX_INVENTORY];
     }
 
@@ -23,6 +24,20 @@ public class Inventory : MonoBehaviour
                 break;
             }
         }
+        PickupUI.Instance.PickupItem(item);
+        UpdateUI();
+    }
+
+    public void MoveItem(int start, int end)
+    {
+        if (start == end)
+            return;
+
+        Item startItem = items[start];
+        Item endItem = items[end];
+
+        items[start] = endItem;
+        items[end] = startItem;
 
         UpdateUI();
     }
