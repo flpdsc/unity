@@ -2,7 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+public interface IInteraction
+{
+    string GetContext(); //표시할 내용
+    void OnInteraction(); //상호작용 
+}
 
 public class PlayerController : Singleton<PlayerController>
 {
@@ -16,6 +20,12 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] Transform normalCamera; //일반 시야 위치 
     [SerializeField] Transform aimCamera; //에임 시야 위치 
 
+    [Header("Search")]
+    [SerializeField] LayerMask searchMask; //탐색 마스크 
+    [SerializeField] float searchRadius; //탐색 범위 
+    [SerializeField] KeyCode interactionKey; //상호작용 키 
+
+    IInteraction interaction; //상호작용가능한 대상  
     bool isAim;
 
     private void Start()
@@ -54,8 +64,18 @@ public class PlayerController : Singleton<PlayerController>
             inven.AddItem(item);
         }
 
+        //상호작용 키 누름 
+        if(Input.GetKeyDown(interactionKey))
+        {
+            if(interaction!=null)
+            {
+                interaction.OnInteraction();
+            }    
+        }
+
         ChageFireType();
         Aim();
+        SearchInteraction();
     }
 
     private void Fire()
@@ -108,6 +128,57 @@ public class PlayerController : Singleton<PlayerController>
         {
             weapon.OnChangeType();
         }
+    }
+
+    private void SearchInteraction()
+    {
+        interaction = null;
+
+        //최초에 직선 레이를 발사해 상호작용 물체 검색 
+        RaycastHit hit;
+        if(Physics.Raycast(eye.transform.position, eye.transform.forward, out hit, searchRadius * 2f, searchMask))
+        {
+            interaction = hit.collider.GetComponent<IInteraction>();
+        }
+
+        //실패하면 원형으로 재검색 
+        if(interaction == null)
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, searchRadius, searchMask);
+            if(colliders.Length > 0)
+            {
+                for(int i=0; i<colliders.Length; ++i)
+                {
+                    IInteraction target = colliders[i].GetComponent<IInteraction>();
+                    if(target != null)
+                    {
+                        interaction = target;
+                        break;
+                    }
+                }
+            }
+        }
+
+        //상호작용 가능한 물체를 찾았다면 
+        if(interaction!=null)
+        {
+            InteractionUI.Instance.Setup(interactionKey, interaction);
+        }
+        else
+        {
+            InteractionUI.Instance.Close();
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, searchRadius);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay(eye.transform.position, eye.transform.forward * searchRadius * 2f);
+
+
     }
 }
  

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Inventory : Singleton<Inventory>
 {
-    public Item[] items;
+    Item[] items;
 
     const int MAX_INVENTORY = 20;
 
