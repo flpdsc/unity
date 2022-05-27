@@ -30,9 +30,9 @@ public class PlayerController : Singleton<PlayerController>
 
     private void Start()
     {
-        inven.AddItem(ItemManager.Instance.GetItem("Armor", 1));
-        inven.AddItem(ItemManager.Instance.GetItem("Potion", 10));
-        inven.AddItem(ItemManager.Instance.GetItem("Helmet", 2));
+        inven.AddItem(ItemManager.Instance.GetItem(ItemData.ITEM_TYPE.Potion, 1));
+        inven.AddItem(ItemManager.Instance.GetItem(ItemData.ITEM_TYPE.Armor, 10));
+        inven.AddItem(ItemManager.Instance.GetItem(ItemData.ITEM_TYPE.Helmet, 2));
     }
 
     private void Update()
@@ -60,7 +60,7 @@ public class PlayerController : Singleton<PlayerController>
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-            Item item = ItemManager.Instance.GetItem("Potion", 20);
+            Item item = ItemManager.Instance.GetItem(ItemData.ITEM_TYPE.Potion, 20);
             inven.AddItem(item);
         }
 

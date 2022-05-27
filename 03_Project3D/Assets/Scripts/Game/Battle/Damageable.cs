@@ -18,6 +18,7 @@ public class Damageable : MonoBehaviour
         if(stat.hp <= 0) //사망 시 
         {
             onDeadEvent?.Invoke(); //죽음 이벤트 발생 
+            Destroy(gameObject); //오브젝트 삭제 
         }
     }
 

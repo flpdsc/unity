@@ -5,6 +5,7 @@ using UnityEngine;
 public class ItemObject : MonoBehaviour, IInteraction
 {
     [SerializeField] Item item;
+    [SerializeField] Rigidbody rigid;
 
     //public string ItemName => item.itemName;
 
@@ -23,5 +24,15 @@ public class ItemObject : MonoBehaviour, IInteraction
     {
         Destroy(gameObject);
         return item;
+    }
+
+    public void Setup(Item item)
+    {
+        this.item = item;
+    }
+
+    public void Throw(Vector3 direction, float power)
+    {
+        rigid.AddForce(direction * power, ForceMode.Impulse);
     }
 }

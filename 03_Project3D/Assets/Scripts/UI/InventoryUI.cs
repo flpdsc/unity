@@ -87,9 +87,17 @@ public class InventoryUI : Singleton<InventoryUI> //, IPointerClickHandler
         dragSlot.transform.position = Input.mousePosition;
     }
 
-    public void OnEndSlotDrag(int start, int end)
+    public void OnEndSlotDrag(int start, int end, bool isInside)
     {
         dragSlot.gameObject.SetActive(false);
-        Inventory.Instance.MoveItem(start, end);
+
+        if(isInside)
+        {
+            Inventory.Instance.MoveItem(start, end);
+        }
+        else
+        {
+            Inventory.Instance.DropItem(start);
+        }
     }
 }

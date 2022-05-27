@@ -13,13 +13,19 @@ public class ItemSlotUI : MonoBehaviour
 
     Item item;
     int slotIndex; //내 슬롯 번호
+    RectTransform slotLayout; //슬롯의 부모 레이아웃 
 
     static int currentSlotIndex; //현재 선택중인 번호 
 
     private void OnEnable()
     {
         selectedImage.enabled = false; //선택 이미지 비활성화
-        slotIndex = transform.GetSiblingIndex(); //부모로부터 몇번째 자식인가 
+
+        if(slotLayout == null)
+        {
+            slotLayout = transform.parent.GetComponent<RectTransform>();
+            slotIndex = transform.GetSiblingIndex(); //부모로부터 몇번째 자식인가
+        }
     }
 
     private void SwitchSlot(bool isOn)
@@ -74,8 +80,10 @@ public class ItemSlotUI : MonoBehaviour
 
     public void OnEndDrag()
     {
+        //마우스 포지션이 slotLayout 내부에 있는지 
+        bool isInside = RectTransformUtility.RectangleContainsScreenPoint(slotLayout, Input.mousePosition);
+
         //내가 어떤 슬롯에서 드래그를 시작해 어떤 슬롯에서 끝냈는가 
-        InventoryUI.Instance.OnEndSlotDrag(slotIndex, currentSlotIndex);
-  
+        InventoryUI.Instance.OnEndSlotDrag(slotIndex, currentSlotIndex, isInside);
     }
 }
